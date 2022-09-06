@@ -1,10 +1,9 @@
-local prefix = "/e" -- prefix (obvious)
+
 --my shitty ass admin made by me im too lazy to fix anything rn mainly posted this cause i just like the look of a loadstring
-
-
+--i know some things are defined twice i dont give a fuck cry about it
 
 local Player = game.Players.LocalPlayer
-local cmd = prefix.. "to"
+local cmd = "/e to"
 Player.Chatted:Connect(
     function(msg)
         if string.sub((msg), 1, #cmd) == cmd then
@@ -26,7 +25,7 @@ Player.Chatted:Connect(
 )
 
 local Player = game.Players.LocalPlayer
-local cmd = prefix .."fling"
+local cmd = "/e fling"
 local last = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame
 Player.Chatted:Connect(
     function(msg)
@@ -138,7 +137,7 @@ Player.Chatted:Connect(
     end
 )
 
-local cmd = prefix.. "void"
+local cmd = "/e void"
 Player.Chatted:Connect(
     function(msg)
         if string.sub((msg), 1, #cmd) == cmd then
@@ -187,7 +186,7 @@ Player.Chatted:Connect(
     end
 )
 
-local cmd = prefix.. "bring"
+local cmd = "/e bring"
 Player.Chatted:Connect(
     function(msg)
         if string.sub((msg), 1, #cmd) == cmd then
@@ -236,7 +235,7 @@ Player.Chatted:Connect(
 )
 
 local Player = game.Players.LocalPlayer
-local cmd = prefix.. "avatar"
+local cmd = "/e avatar"
 Player.Chatted:Connect(
     function(msg)
         if string.sub((msg), 1, #cmd) == cmd then
@@ -291,7 +290,9 @@ Player.Chatted:Connect(
                         end
                     end
 
-                    Outfit(target)
+                    Outfit(target) -- makes my avatar yours
+                --SaveAvatar(LocalPlayer.Humanoid:GetAppliedDescription(), Enum.HumanoidRigType.R15) -- r15
+                --SaveAvatar(LocalPlayer.Humanoid:GetAppliedDescription(), 0) -- r6
                 end
             end
         end
