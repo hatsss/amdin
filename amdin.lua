@@ -101,7 +101,7 @@ Player.Chatted:Connect(
 
                     local function diefunction()
                         function endthem()
-                            Player.Character.HumanoidRootPart.CFrame = target.Head.CFrame - Vector3.new(0, 2, 0)
+                            Player.Character.HumanoidRootPart.CFrame = target.Head.CFrame - Vector3.new(0, 5, 0)
                             Player.Character.HumanoidRootPart.CFrame = Torso.CFrame * Offset
                         end
                         connection = game.RunService.Heartbeat:Connect(endthem)
