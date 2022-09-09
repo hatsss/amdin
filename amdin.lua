@@ -1,8 +1,9 @@
 
 --my shitty ass admin made by me im too lazy to fix anything rn mainly posted this cause i just like the look of a loadstring
---i know some things are defined twice i dont give a fuck cry about it
+--- i fixed alot and made the claims better (im bored please help)
 
 local Player = game.Players.LocalPlayer
+
 local cmd = "/e to"
 Player.Chatted:Connect(
     function(msg)
@@ -24,7 +25,6 @@ Player.Chatted:Connect(
     end
 )
 
-local Player = game.Players.LocalPlayer
 local cmd = "/e fling"
 local last = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame
 Player.Chatted:Connect(
@@ -41,7 +41,6 @@ Player.Chatted:Connect(
                             string.sub((string.lower(msg)), number, #msg)
                  then
                     local target = v.Character
-                    local me = game.Players.LocalPlayer
                     local Torso = me.Character:FindFirstChild("Torso") or me.Character:FindFirstChild("UpperTorso")
                     local Offset =
                         CFrame.new(
@@ -51,7 +50,7 @@ Player.Chatted:Connect(
                     ) *
                         CFrame.Angles(1.3, 0, 0) *
                         CFrame.new(-(Torso.Size.X / 3), 0, -(Torso.Size.Z / 3))
-                    local Origin = me.Character.HumanoidRootPart.CFrame
+                    local Origin = Player.Character.HumanoidRootPart.CFrame
 
                     for i, v in pairs(me:GetChildren()) do
                         if v:IsA("Tool") then
@@ -77,7 +76,7 @@ Player.Chatted:Connect(
                     bodyvel.MaxTorque = Vector3.new(1, 1, 1) * math.huge
                     bodyvel.P = math.huge
                     bodyvel.AngularVelocity = Vector3.new(9e5, 9e5, 9e5)
-                    bodyvel.Parent = me.Character.HumanoidRootPart
+                    bodyvel.Parent = Player.Character.HumanoidRootPart
 
                     for i, v in next, me.Character:GetChildren() do
                         if v:IsA("BasePart") then
@@ -99,8 +98,8 @@ Player.Chatted:Connect(
 
                     local function diefunction()
                         function endthem()
-                            me.Character.HumanoidRootPart.CFrame = target.Head.CFrame - Vector3.new(0, 2, 0)
-                            me.Character.HumanoidRootPart.CFrame = Torso.CFrame * Offset
+                            Player.Character.HumanoidRootPart.CFrame = target.Head.CFrame - Vector3.new(0, 2, 0)
+                            Player.Character.HumanoidRootPart.CFrame = Torso.CFrame * Offset
                         end
                         connection = game.RunService.Heartbeat:Connect(endthem)
                         wait(1)
@@ -117,8 +116,8 @@ Player.Chatted:Connect(
                             end
                         end
 
-                        me.Character.HumanoidRootPart.CFrame = Origin
-                        me.Character.Humanoid:ChangeState(8)
+                        Player.Character.HumanoidRootPart.CFrame = Origin
+                        Player.Character.Humanoid:ChangeState(8)
                     end
                     for i, v in pairs(game.Players.LocalPlayer:FindFirstChildOfClass("Backpack"):GetDescendants()) do
                         if v:IsA("Tool") or v:IsA("HopperBin") then
@@ -153,33 +152,45 @@ Player.Chatted:Connect(
                  then
                     local RunService = game:GetService("RunService")
 
-                    local Target = v.Character
-                    local LocalPlayer = game.Players.LocalPlayer
-                    local Character = game.Players.LocalPlayer.Character
+                    local Target = v
+                    local Character = Player.Character
+                    local resetpos = Character.HumanoidRootPart.CFrame
                     local Humanoid = Character.Humanoid
-                    local BackPack = LocalPlayer.Backpack
+                    local BackPack = Player.Backpack
                     local tool = Character:FindFirstChildOfClass("Tool") or BackPack:FindFirstChildOfClass("Tool")
                     local Origin = Character.HumanoidRootPart.CFrame
-
+                    local function ToolerCframer(tool, pos)
+                        local rarm =
+                            game:GetService("Players").LocalPlayer.Character:FindFirstChild("RightLowerArm") or
+                            game:GetService("Players").LocalPlayer.Character:FindFirstChild("Right Arm")
+                        tool.Grip =
+                            CFrame.new().Inverse(
+                            CFrame.new().toObjectSpace(
+                                rarm.CFrame * CFrame.new(0, -1, 0, 1, 0, 0, 0, 0, 1, 0, -1, 0),
+                                pos
+                            )
+                        )
+                    end
                     local Human = Humanoid:Clone()
                     Human.Parent = Character
-
+                    workspace.Camera.CameraSubject = Target.Character:FindFirstChildOfClass("Head")
                     wait()
-
                     Humanoid:Destroy()
                     wait()
                     tool.Parent = Character
-                    Character.HumanoidRootPart.CFrame = Target.HumanoidRootPart.CFrame
-                    wait(.3)
+                    repeat
+                        game:GetService("RunService").Heartbeat:Wait()
+                        firetouchinterest(tool.Handle, Target.Character.HumanoidRootPart, 0)
+                    until tool.Parent ~= Character
                     Character.HumanoidRootPart.CFrame = CFrame.new(9e9, 9e9, 9e9)
                     wait(.3)
                     Character:ClearAllChildren()
 
-                    Character = Instance.new("Model", workspace)
-                    Character:Destroy()
-                    CharacterAdded:Wait()
-                    Character:WaitForChild("HumanoidRootPart")
-                    Character.HumanoidRootPart.CFrame = Position
+                    Player.Character = Instance.new("Model", workspace)
+                    Player.Character:Destroy()
+                    Player.CharacterAdded:Wait()
+                    Player.Character:WaitForChild("HumanoidRootPart")
+                    Player.Character.HumanoidRootPart.CFrame = resetpos
                 end
             end
         end
@@ -204,37 +215,49 @@ Player.Chatted:Connect(
 
                     local RunService = game:GetService("RunService")
 
-                    local Target = v.Character
-                    local LocalPlayer = game.Players.LocalPlayer
-                    local Character = game.Players.LocalPlayer.Character
+                    local Target = v
+                    local Character = Player.Character
+                    local resetpos = Character.HumanoidRootPart.CFrame
                     local Humanoid = Character.Humanoid
-                    local BackPack = LocalPlayer.Backpack
+                    local BackPack = Player.Backpack
                     local tool = Character:FindFirstChildOfClass("Tool") or BackPack:FindFirstChildOfClass("Tool")
-                    local pos = Character.HumanoidRootPart.CFrame
-
-                    local man = Humanoid:Clone()
-                    man.Parent = Character
-
+                    local Origin = Character.HumanoidRootPart.CFrame
+                    local function ToolerCframer(tool, pos)
+                        local rarm =
+                            game:GetService("Players").LocalPlayer.Character:FindFirstChild("RightLowerArm") or
+                            game:GetService("Players").LocalPlayer.Character:FindFirstChild("Right Arm")
+                        tool.Grip =
+                            CFrame.new().Inverse(
+                            CFrame.new().toObjectSpace(
+                                rarm.CFrame * CFrame.new(0, -1, 0, 1, 0, 0, 0, 0, 1, 0, -1, 0),
+                                pos
+                            )
+                        )
+                    end
+                    local Human = Humanoid:Clone()
+                    Human.Parent = Character
                     wait()
-
                     Humanoid:Destroy()
                     wait()
                     tool.Parent = Character
-                    Character.HumanoidRootPart.CFrame = Target.HumanoidRootPart.CFrame
-                    wait(.3)
-                    Character.HumanoidRootPart.CFrame = pos
+                    repeat
+                        game:GetService("RunService").Heartbeat:Wait()
+                        firetouchinterest(tool.Handle, Target.Character.HumanoidRootPart, 0)
+                    until tool.Parent ~= Character
                     wait(.3)
                     Character:ClearAllChildren()
 
-                    Character = Instance.new("Model", workspace)
-                    Character:Destroy()
+                    Player.Character = Instance.new("Model", workspace)
+                    Player.Character:Destroy()
+                    Player.CharacterAdded:Wait()
+                    Player.Character:WaitForChild("HumanoidRootPart")
+                    Player.Character.HumanoidRootPart.CFrame = resetpos
                 end
             end
         end
     end
 )
 
-local Player = game.Players.LocalPlayer
 local cmd = "/e avatar"
 Player.Chatted:Connect(
     function(msg)
@@ -253,8 +276,7 @@ Player.Chatted:Connect(
                     local CoreGui = game:GetService("CoreGui")
                     local GuiService = game:GetService("GuiService")
                     local VirtualInputManager = game:GetService("VirtualInputManager")
-                    local LocalPlayer = game.Players.LocalPlayer
-                    local Mouse = LocalPlayer:GetMouse()
+                    local Mouse = Player:GetMouse()
 
                     local function SaveAvatar(Description, Type)
                         pcall(
@@ -293,6 +315,71 @@ Player.Chatted:Connect(
                     Outfit(target) -- makes my avatar yours
                 --SaveAvatar(LocalPlayer.Humanoid:GetAppliedDescription(), Enum.HumanoidRigType.R15) -- r15
                 --SaveAvatar(LocalPlayer.Humanoid:GetAppliedDescription(), 0) -- r6
+                end
+            end
+        end
+    end
+)
+
+local cmd = "/e kill"
+Player.Chatted:Connect(
+    function(msg)
+        if string.sub((msg), 1, #cmd) == cmd then
+            for i, v in next, game:GetService("Players"):GetChildren() do
+                local number = #cmd + 2
+                local number2 = #cmd + 1
+                if
+                    v:IsA("Player") and
+                        string.lower(string.sub((v.Name), 1, #msg - number2)) ==
+                            string.sub((string.lower(msg)), number, #msg) or
+                        string.lower(string.sub((v.DisplayName), 1, #msg - number2)) ==
+                            string.sub((string.lower(msg)), number, #msg)
+                 then
+                    local RunService = game:GetService("RunService")
+
+                    local Target = v
+                    local Character = Player.Character
+                    local resetpos = Character.HumanoidRootPart.CFrame
+                    local Humanoid = Character.Humanoid
+                    local BackPack = Player.Backpack
+                    local tool = Character:FindFirstChildOfClass("Tool") or BackPack:FindFirstChildOfClass("Tool")
+                    local Origin = Character.HumanoidRootPart.CFrame
+                    local function ToolerCframer(tool, pos)
+                        local rarm =
+                            game:GetService("Players").LocalPlayer.Character:FindFirstChild("RightLowerArm") or
+                            game:GetService("Players").LocalPlayer.Character:FindFirstChild("Right Arm")
+                        tool.Grip =
+                            CFrame.new().Inverse(
+                            CFrame.new().toObjectSpace(
+                                rarm.CFrame * CFrame.new(0, -1, 0, 1, 0, 0, 0, 0, 1, 0, -1, 0),
+                                pos
+                            )
+                        )
+                    end
+                    local Human = Humanoid:Clone()
+                    Human.Parent = Character
+                    wait()
+                    Humanoid:Destroy()
+                    ToolerCframer(tool, Target.Character.Head.CFrame)
+                    wait()
+                    tool.Parent = Character
+                    repeat
+                        game:GetService("RunService").Heartbeat:Wait()
+                        firetouchinterest(tool.Handle, Target.Character.HumanoidRootPart, 0)
+                    until tool.Parent ~= Character
+                    wait(.2)
+                    Character.Humanoid.Health = 0
+                    Player.Character = nil
+                    wait(.2)
+                    Player.Character = character
+                    wait(.3)
+                    Character:ClearAllChildren()
+
+                    Player.Character = Instance.new("Model", workspace)
+                    Player.Character:Destroy()
+                    Player.CharacterAdded:Wait()
+                    Player.Character:WaitForChild("HumanoidRootPart")
+                    Player.Character.HumanoidRootPart.CFrame = resetpos
                 end
             end
         end
