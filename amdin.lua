@@ -41,18 +41,21 @@ Player.Chatted:Connect(
                             string.sub((string.lower(msg)), number, #msg)
                  then
                     local target = v.Character
-                    local Torso = me.Character:FindFirstChild("Torso") or me.Character:FindFirstChild("UpperTorso")
+                    local Player = game.Players.LocalPlayer
+
+                    local Torso =
+                        Player.Character:FindFirstChild("Torso") or Player.Character:FindFirstChild("UpperTorso")
                     local Offset =
                         CFrame.new(
                         (Torso.Velocity.X / 1),
-                        -(Torso.Size.Y * 0.75) + (Torso.Velocity.Y / 2),
+                        (Torso.Size.Y * 0.75) + (Torso.Velocity.Y / 2),
                         (Torso.Velocity.Z / 6)
                     ) *
                         CFrame.Angles(1.3, 0, 0) *
                         CFrame.new(-(Torso.Size.X / 3), 0, -(Torso.Size.Z / 3))
                     local Origin = Player.Character.HumanoidRootPart.CFrame
 
-                    for i, v in pairs(me:GetChildren()) do
+                    for i, v in pairs(Player:GetChildren()) do
                         if v:IsA("Tool") then
                             v.Parent = game.Players.LocalPlayer.Backpack
                         end
@@ -66,7 +69,7 @@ Player.Chatted:Connect(
                     for i, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
                         if v:IsA("Tool") then
                             v.Parent = game.Players.LocalPlayer:FindFirstChildOfClass("Backpack")
-                            v.GripPos = Vector3.new(9e9, 9e9, 9e9)
+                            v.GripPos = Vector3.new(5000, 5000, 5000)
                             v.Handle.Massless = true
                             v.Parent = game.Players.LocalPlayer.Character
                         end
@@ -78,7 +81,7 @@ Player.Chatted:Connect(
                     bodyvel.AngularVelocity = Vector3.new(9e5, 9e5, 9e5)
                     bodyvel.Parent = Player.Character.HumanoidRootPart
 
-                    for i, v in next, me.Character:GetChildren() do
+                    for i, v in next, Player.Character:GetChildren() do
                         if v:IsA("BasePart") then
                             v.CanCollide = true
                             v.Massless = true
@@ -87,7 +90,7 @@ Player.Chatted:Connect(
                     end
 
                     local function stopthisfunc()
-                        for i, v in next, me.Character:GetChildren() do
+                        for i, v in next, Player.Character:GetChildren() do
                             if v:IsA("BasePart") then
                                 v.CanCollide = true
                             end
@@ -110,7 +113,7 @@ Player.Chatted:Connect(
                     stopconnection:Disconnect()
                     bodyvel:Remove()
                     for i = 1, 5 do
-                        for _, v in next, me.Character:GetDescendants() do
+                        for _, v in next, Player.Character:GetDescendants() do
                             if v:IsA("BasePart") then
                                 v.Velocity, v.RotVelocity = Vector3.new(), Vector3.new()
                             end
@@ -125,7 +128,7 @@ Player.Chatted:Connect(
                         end
                     end
                     HumanoidRootPart.Anchored = false
-                    for _, v in next, me.Character:GetDescendants() do
+                    for _, v in next, Player.Character:GetDescendants() do
                         if v:IsA("BasePart") then
                             v.Velocity, v.RotVelocity = Vector3.new(), Vector3.new()
                         end
