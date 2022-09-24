@@ -184,8 +184,8 @@ Player.Chatted:Connect(
                         firetouchinterest(tool.Handle, Target.Character.HumanoidRootPart, 0)
                     until tool.Parent ~= Character
 
-                    Character.HumanoidRootPart.Velocity = Vector3.new(9e9, -1000, 9e9)
-                    Character.HumanoidRootPart.CFrame = CFrame.new(9e9, -1000, 9e9)
+                   Character.HumanoidRootPart.Velocity = Vector3.new(34, -9e5, 3)
+                   Character.HumanoidRootPart.CFrame = CFrame.new(34, -9e5, 3)
 
                     wait(.3)
                     Character:ClearAllChildren()
