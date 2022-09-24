@@ -1,4 +1,3 @@
-
 --my shitty ass admin made by me im too lazy to fix anything rn mainly posted this cause i just like the look of a loadstring
 --- i fixed alot and made the claims better (im bored please help)
 
@@ -78,14 +77,14 @@ Player.Chatted:Connect(
                     local bodyvel = Instance.new("BodyAngularVelocity")
                     bodyvel.MaxTorque = Vector3.new(1, 1, 1) * math.huge
                     bodyvel.P = math.huge
-                    bodyvel.AngularVelocity = Vector3.new(9e5, 9e5, 9e5)
+                    bodyvel.AngularVelocity = Vector3.new(9e5, -1000, 9e5)
                     bodyvel.Parent = Player.Character.HumanoidRootPart
 
                     for i, v in next, Player.Character:GetChildren() do
                         if v:IsA("BasePart") then
                             v.CanCollide = true
                             v.Massless = true
-                            v.Velocity = Vector3.new(9e5, 9e5, 9e5)
+                            v.Velocity = Vector3.new(9e5, -1000, 9e5)
                         end
                     end
 
@@ -154,7 +153,6 @@ Player.Chatted:Connect(
                             string.sub((string.lower(msg)), number, #msg)
                  then
                     local RunService = game:GetService("RunService")
-
                     local Target = v
                     local Character = Player.Character
                     local resetpos = Character.HumanoidRootPart.CFrame
@@ -185,7 +183,10 @@ Player.Chatted:Connect(
                         game:GetService("RunService").Heartbeat:Wait()
                         firetouchinterest(tool.Handle, Target.Character.HumanoidRootPart, 0)
                     until tool.Parent ~= Character
-                    Character.HumanoidRootPart.CFrame = CFrame.new(9e9, 9e9, 9e9)
+
+                    Character.HumanoidRootPart.Velocity = Vector3.new(9e9, -1000, 9e9)
+                    Character.HumanoidRootPart.CFrame = CFrame.new(9e9, -1000, 9e9)
+
                     wait(.3)
                     Character:ClearAllChildren()
 
