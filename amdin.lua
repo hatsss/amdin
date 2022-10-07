@@ -388,3 +388,77 @@ Player.Chatted:Connect(
         end
     end
 )
+
+local cmd = "/e reweld"
+Player.Chatted:Connect(
+    function(msg)
+        if string.sub((msg), 1, #cmd) == cmd then
+            for i, v in next, game:GetService("Players"):GetChildren() do
+                local number = #cmd + 2
+                local number2 = #cmd + 1
+                if
+                    v:IsA("Player") and
+                        string.lower(string.sub((v.Name), 1, #msg - number2)) ==
+                            string.sub((string.lower(msg)), number, #msg) or
+                        string.lower(string.sub((v.DisplayName), 1, #msg - number2)) ==
+                            string.sub((string.lower(msg)), number, #msg)
+                 then
+                    local RunService = game:GetService("RunService")
+
+                    local RunService = game:GetService("RunService")
+
+                    local Target = v
+                    local Character = Player.Character
+                    local resetpos = Character.HumanoidRootPart.CFrame
+                    local Humanoid = Character.Humanoid
+                    local BackPack = Player.Backpack
+                    local tool = Character:FindFirstChildOfClass("Tool") or BackPack:FindFirstChildOfClass("Tool")
+                    local Origin = Character.HumanoidRootPart.CFrame
+                    local function ToolerCframer(tool, pos)
+                        local rarm =
+                            game:GetService("Players").LocalPlayer.Character:FindFirstChild("RightLowerArm") or
+                            game:GetService("Players").LocalPlayer.Character:FindFirstChild("Right Arm")
+                        tool.Grip =
+                            CFrame.new().Inverse(
+                            CFrame.new().toObjectSpace(
+                                rarm.CFrame * CFrame.new(0, -1, 0, 1, 0, 0, 0, 0, 1, 0, -1, 0),
+                                pos
+                            )
+                        )
+                    end
+                    local Human = Humanoid:Clone()
+                    Human.Parent = Character
+                    workspace.Camera.CameraSubject = Target.Character:FindFirstChildOfClass("Head")
+                    wait()
+                    Humanoid:Destroy()
+                    wait()
+                    tool.Parent = Character
+                    repeat
+                        game:GetService("RunService").Heartbeat:Wait()
+                        firetouchinterest(tool.Handle, Target.Character.HumanoidRootPart, 0)
+                    until tool.Parent ~= Character
+
+                    for i, v in pairs(Target.Character:GetChildren()) do
+                        if v:IsA("Accessory") then
+                            sethiddenproperty(v, "BackendAccoutrementState", 0) --prepare for hat to be rewelded
+                            for i, v in pairs(v.Handle:GetChildren()) do
+                                if v:IsA("Attachment") then
+                                    v:remove()
+                                end
+                            end
+                        end
+                    end
+
+                    wait(.3)
+                    Character:ClearAllChildren()
+
+                    Player.Character = Instance.new("Model", workspace)
+                    Player.Character:Destroy()
+                    Player.CharacterAdded:Wait()
+                    Player.Character:WaitForChild("HumanoidRootPart")
+                    Player.Character.HumanoidRootPart.CFrame = resetpos
+                end
+            end
+        end
+    end
+)
